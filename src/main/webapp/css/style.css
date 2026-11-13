@@ -1,0 +1,82 @@
+/* Giao diện theo docs/ui (hoàn thiện ở commit 12) */
+body {
+    background: #fff;
+    color: #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 24px 16px;
+}
+
+.box {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 48px 32px;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin: 8px 0 24px;
+}
+
+.btn {
+    display: inline-block;
+    background: #8eaadb;
+    border: 1px solid #000;
+    color: #000;
+    font: inherit;
+    padding: 4px 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="password"] {
+    background: #bfbfbf;
+    border: none;
+    font: inherit;
+    padding: 4px 6px;
+    width: 280px;
+}
+
+table.form td {
+    padding: 6px 12px 6px 0;
+}
+
+.error {
+    display: block;
+    color: #c00;
+    min-height: 1.2em;
+    margin: 8px 0;
+}
+
+.actions {
+    margin-top: 12px;
+}
+
+.center {
+    text-align: center;
+    margin: 24px 0 8px;
+}
+
+.staff-name {
+    text-align: right;
+    padding-right: 120px;
+}
+
+/* Trang đăng nhập: khung vừa nội dung, nằm giữa màn hình, bo góc */
+#loginBox {
+    width: fit-content;
+    padding: 24px 32px;
+    border: 2px solid #000;
+    border-radius: 12px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loginBox .actions {
+    text-align: center;
+}

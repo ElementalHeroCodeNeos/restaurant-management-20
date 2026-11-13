@@ -13,6 +13,8 @@
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Giữ ngày sửa thật của file trong war (mặc định 1980 làm trình duyệt cache CSS rất lâu) -->
+        <project.build.outputTimestamp>x</project.build.outputTimestamp>
     </properties>
 
     <dependencies>
