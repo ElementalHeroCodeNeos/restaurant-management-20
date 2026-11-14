@@ -56,7 +56,8 @@
         <c:forEach var="d" items="${listDish}" varStatus="st">
             <tr>
                 <td>${st.count}</td>
-                <%-- Bước 13: khách hàng click chọn 1 món ăn (DishDetail9.jsp làm ở commit 7) --%>
+                <%-- Bước 13: khách hàng click chọn 1 món ăn --%>
+                <%-- Bước 14: SearchDish9.jsp gọi trang DishDetail9.jsp --%>
                 <td><a class="chooseDish" href="DishDetail9.jsp?id=${d.id}"><c:out value="${d.name}"/></a></td>
                 <td class="img-cell">
                     <c:if test="${not empty d.image}">

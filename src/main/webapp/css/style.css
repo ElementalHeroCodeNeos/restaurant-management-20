@@ -132,6 +132,24 @@ table.data td {
     vertical-align: middle;
 }
 
+/* Chi tiết món: nhãn trái, giá trị phải, ảnh dưới */
+table.detail {
+    margin-left: 80px;
+    border-collapse: collapse;
+}
+
+table.detail td {
+    padding: 2px 8px 2px 0;
+    vertical-align: top;
+}
+
+#imgDish {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    border: 1px solid #888;
+}
+
 /* Trang đăng nhập: khung vừa nội dung, nằm giữa màn hình, bo góc */
 #loginBox {
     width: fit-content;
