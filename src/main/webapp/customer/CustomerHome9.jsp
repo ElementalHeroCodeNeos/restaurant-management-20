@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Trang chủ website nhà hàng</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 <body>
 <div class="box">

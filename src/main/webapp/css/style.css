@@ -132,6 +132,11 @@ table.data td {
     vertical-align: middle;
 }
 
+/* Tìm bàn */
+#tblTable {
+    min-width: 480px;
+}
+
 /* Chi tiết món: nhãn trái, giá trị phải, ảnh dưới */
 table.detail {
     margin-left: 80px;

@@ -1,26 +1,23 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.ArrayList, dao.DishDAO9, model.Dish9" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+    import="java.util.ArrayList, java.util.Locale, java.text.NumberFormat, dao.DishDAO9, model.Dish9" %>
 <%
     // Bước 5: SearchDish9.jsp submit gọi chính nó xử lí (form GET, tham số txtDishName)
     String txtDishName = request.getParameter("txtDishName");
-    if (txtDishName != null && !txtDishName.trim().isEmpty()) {
+    String key = (txtDishName == null) ? null : txtDishName.trim();
+    ArrayList<Dish9> listDish = null;
+    if (key != null && !key.isEmpty()) {
         // Bước 6: SearchDish9.jsp gọi lớp DishDAO9 tìm các món có tên chứa từ khóa
         DishDAO9 dishDAO = new DishDAO9();
-        ArrayList<Dish9> listDish = dishDAO.getDishByName(txtDishName.trim());
-        request.setAttribute("listDish", listDish);
+        listDish = dishDAO.getDishByName(key);
     }
+    NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
 %>
-<c:set var="key" value="${fn:trim(param.txtDishName)}"/>
-<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Tìm kiếm thông tin món ăn</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 <body>
 <div class="box">
@@ -32,18 +29,15 @@
     <form method="get" action="SearchDish9.jsp" class="search-row">
         <label for="txtDishName">Tên món</label>
         <input type="text" name="txtDishName" id="txtDishName"
-               value="<c:out value='${param.txtDishName}'/>" autofocus>
+               value="<%= txtDishName == null ? "" : txtDishName %>" autofocus>
         <button type="submit" id="btnSearch" class="btn">Tìm kiếm</button>
     </form>
 
-    <c:choose>
-        <c:when test="${param.txtDishName ne null and empty key}">
-            <p class="error">Vui lòng nhập tên món ăn</p>
-        </c:when>
-        <c:when test="${not empty key and empty listDish}">
-            <p class="error">Không tìm thấy món ăn phù hợp</p>
-        </c:when>
-    </c:choose>
+    <% if (key != null && key.isEmpty()) { %>
+        <p class="error">Vui lòng nhập tên món ăn</p>
+    <% } else if (key != null && listDish == null) { %>
+        <p class="error">Không tìm thấy món ăn phù hợp</p>
+    <% } %>
 
     <%-- Bước 12: SearchDish9.jsp hiển thị danh sách món ăn tìm được --%>
     <table id="tblDish" class="data">
@@ -53,20 +47,21 @@
             <th>Hình ảnh</th>
             <th>Đơn giá</th>
         </tr>
-        <c:forEach var="d" items="${listDish}" varStatus="st">
+        <% if (listDish != null) for (int i = 0; i < listDish.size(); i++) {
+               Dish9 d = listDish.get(i); %>
             <tr>
-                <td>${st.count}</td>
+                <td><%= i + 1 %></td>
                 <%-- Bước 13: khách hàng click chọn 1 món ăn --%>
                 <%-- Bước 14: SearchDish9.jsp gọi trang DishDetail9.jsp --%>
-                <td><a class="chooseDish" href="DishDetail9.jsp?id=${d.id}"><c:out value="${d.name}"/></a></td>
+                <td><a class="chooseDish" href="DishDetail9.jsp?id=<%= d.getId() %>"><%= d.getName() %></a></td>
                 <td class="img-cell">
-                    <c:if test="${not empty d.image}">
-                        <img src="<c:out value='${d.image}'/>" alt="<c:out value='${d.name}'/>">
-                    </c:if>
+                    <% if (d.getImage() != null) { %>
+                        <img src="<%= d.getImage() %>" alt="<%= d.getName() %>">
+                    <% } %>
                 </td>
-                <td><fmt:formatNumber value="${d.price}" maxFractionDigits="0"/></td>
+                <td><%= nf.format(d.getPrice()) %></td>
             </tr>
-        </c:forEach>
+        <% } %>
     </table>
     </div>
 

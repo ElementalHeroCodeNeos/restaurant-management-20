@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String err = request.getParameter("err");
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 </head>
 <body>
 <div class="box" id="loginBox">
@@ -22,10 +24,8 @@
             </tr>
         </table>
         <label id="lblError" class="error">
-            <c:choose>
-                <c:when test="${param.err == 'empty'}">Vui lòng nhập tên đăng nhập và mật khẩu</c:when>
-                <c:when test="${param.err == 'fail'}">Sai tên đăng nhập hoặc mật khẩu</c:when>
-            </c:choose>
+            <% if ("empty".equals(err)) { %>Vui lòng nhập tên đăng nhập và mật khẩu<% }
+               else if ("fail".equals(err)) { %>Sai tên đăng nhập hoặc mật khẩu<% } %>
         </label>
         <div class="actions">
             <button type="submit" name="btnLogin" id="btnLogin" class="btn">Đăng nhập</button>
