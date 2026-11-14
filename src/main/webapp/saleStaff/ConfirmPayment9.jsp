@@ -1,12 +1,15 @@
 <%@ include file="../checkSaleStaff.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-    import="java.util.Locale, java.text.NumberFormat, java.text.SimpleDateFormat, dao.OrderDAO9,
-            model.Table9, model.Order9, model.OrderedDish9, model.OrderedCombo9, model.Invoice9, model.SaleStaff9" %>
+    import="java.util.Locale, java.text.NumberFormat, java.text.SimpleDateFormat, dao.OrderDAO9, dao.CustomerDAO9,
+            model.Table9, model.Order9, model.OrderedDish9, model.OrderedCombo9, model.Invoice9, model.SaleStaff9,
+            model.Customer9" %>
 <%
     // Receive table info: nhân viên đang đăng nhập (session) và bàn đã chọn (id trên URL)
     SaleStaff9 saleStaff = (SaleStaff9) session.getAttribute("saleStaff");
     Invoice9 invoice = null;
     Table9 table = null;
+    String txtPhone = null;
+    String err = null;
 
     String id = request.getParameter("id");
     if (id != null) {
@@ -30,9 +33,29 @@
         // Bước 23: Invoice9 trả kết quả về cho ConfirmPayment9.jsp (giữ hóa đơn tạm trong session)
         session.setAttribute("invoice", invoice);
     } else {
-        // Trang submit gọi chính nó (Tìm khách hàng): dùng lại hóa đơn tạm trong session
+        // Bước 26: ConfirmPayment9.jsp submit gọi chính nó xử lí (Tìm khách hàng)
+        // dùng lại hóa đơn tạm trong session, không gọi lại OrderDAO9
         invoice = (Invoice9) session.getAttribute("invoice");
         table = invoice.getOrder().getTable();
+
+        txtPhone = request.getParameter("txtPhone");
+        String phone = (txtPhone == null) ? "" : txtPhone.trim();
+        if (phone.isEmpty()) {
+            err = "Vui lòng nhập số điện thoại";
+        } else {
+            // Bước 27: ConfirmPayment9.jsp gọi lớp CustomerDAO9 tìm khách hàng theo số điện thoại
+            CustomerDAO9 customerDAO = new CustomerDAO9();
+            Customer9 customer = customerDAO.getCustomerByPhone(phone);
+            if (customer != null) {
+                // Bước 33: ConfirmPayment9.jsp gọi lớp Invoice9 yêu cầu gắn khách hàng vào hóa đơn
+                // Bước 34: Invoice9 gọi hàm setCustomer()
+                invoice.setCustomer(customer);
+                // Bước 35: Invoice9 trả đối tượng về cho ConfirmPayment9.jsp
+            } else {
+                // không tìm thấy: giữ nguyên khách đã gắn trước đó (nếu có)
+                err = "Không tìm thấy khách hàng";
+            }
+        }
     }
 
     NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
@@ -50,18 +73,23 @@
     <h2>Xác nhận thanh toán</h2>
 
     <%-- Bước 24: ConfirmPayment9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
+    <%-- Bước 36: ConfirmPayment9.jsp hiển thị hóa đơn kèm thông tin khách hàng --%>
     <div class="confirm-area">
         <div class="line">Bàn: <label id="lblTableName"><%= table.getName() %></label></div>
         <div class="line">Thời gian tạo đơn: <label id="lblCreatedTime"><%= df.format(invoice.getOrder().getCreatedTime()) %></label></div>
         <div class="line">Nhân viên bán hàng: <label id="lblSaleStaff"><%= saleStaff.getFullName() %></label></div>
-        <%-- Khách hàng: tìm và gắn vào hóa đơn ở commit 10 --%>
-        <div class="line">Khách hàng: <label id="lblCustomer"></label></div>
+        <div class="line">Khách hàng: <label id="lblCustomer"><%= invoice.getCustomer() == null ? ""
+                : invoice.getCustomer().getFullName() + " - " + invoice.getCustomer().getPhone() %></label></div>
 
+        <%-- Bước 25: nhân viên nhập số điện thoại khách hàng và click Tìm khách hàng --%>
         <form method="post" action="ConfirmPayment9.jsp" class="phone-row">
             <label for="txtPhone">Số điện thoại</label>
-            <input type="text" name="txtPhone" id="txtPhone">
+            <input type="text" name="txtPhone" id="txtPhone" value="<%= txtPhone == null ? "" : txtPhone %>">
             <button type="submit" id="btnSearchCustomer" class="btn">Tìm khách hàng</button>
         </form>
+        <% if (err != null) { %>
+            <p class="error"><%= err %></p>
+        <% } %>
 
         <div class="line">Danh sách các món đã gọi:</div>
         <table id="tblOrderedItem" class="data">

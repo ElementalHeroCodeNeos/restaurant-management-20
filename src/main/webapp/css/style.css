@@ -154,6 +154,10 @@ table.data td {
     margin: 12px 0 20px;
 }
 
+.confirm-area .error {
+    margin: -12px 0 16px;
+}
+
 #tblOrderedItem {
     min-width: 640px;
 }
