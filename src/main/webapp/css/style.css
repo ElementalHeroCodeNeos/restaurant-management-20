@@ -137,13 +137,13 @@ table.data td {
     min-width: 480px;
 }
 
-/* Xác nhận thanh toán: thông tin, ô SĐT, bảng món, nút cùng lề trái với bảng */
-.confirm-area {
+/* Xác nhận thanh toán, Hóa đơn: thông tin, ô SĐT, bảng món, nút cùng lề trái với bảng */
+.info-area {
     width: fit-content;
     margin: 0 auto;
 }
 
-.confirm-area .line {
+.info-area .line {
     margin: 6px 0;
 }
 
@@ -154,7 +154,7 @@ table.data td {
     margin: 12px 0 20px;
 }
 
-.confirm-area .error {
+.info-area .error {
     margin: -12px 0 16px;
 }
 
@@ -162,7 +162,7 @@ table.data td {
     min-width: 640px;
 }
 
-.confirm-area .total {
+.info-area .total {
     margin-top: 24px;
 }
 
@@ -204,4 +204,11 @@ table.detail td {
 
 #loginBox .actions {
     text-align: center;
+}
+
+/* In hóa đơn: ẩn các nút (để cuối file để thắng .actions-row ở trên) */
+@media print {
+    .actions-row {
+        display: none;
+    }
 }

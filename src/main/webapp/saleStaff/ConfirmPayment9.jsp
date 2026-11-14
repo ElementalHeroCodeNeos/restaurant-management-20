@@ -74,7 +74,7 @@
 
     <%-- Bước 24: ConfirmPayment9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
     <%-- Bước 36: ConfirmPayment9.jsp hiển thị hóa đơn kèm thông tin khách hàng --%>
-    <div class="confirm-area">
+    <div class="info-area">
         <div class="line">Bàn: <label id="lblTableName"><%= table.getName() %></label></div>
         <div class="line">Thời gian tạo đơn: <label id="lblCreatedTime"><%= df.format(invoice.getOrder().getCreatedTime()) %></label></div>
         <div class="line">Nhân viên bán hàng: <label id="lblSaleStaff"><%= saleStaff.getFullName() %></label></div>
@@ -124,7 +124,8 @@
         <div class="line total">Tổng tiền: <label id="lblTotalAmount"><%= nf.format(invoice.getTotalAmount()) %></label></div>
 
         <div class="actions-row">
-            <%-- Xác nhận: doConfirmPayment9.jsp làm ở commit 11 --%>
+            <%-- Bước 37: nhân viên click Xác nhận --%>
+            <%-- Bước 38: ConfirmPayment9.jsp gọi trang doConfirmPayment9.jsp --%>
             <form method="post" action="doConfirmPayment9.jsp">
                 <button type="submit" id="btnConfirm" class="btn">Xác nhận</button>
             </form>

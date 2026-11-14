@@ -3,7 +3,10 @@
 <%
     // Receive sale staff info: saleStaff lấy từ session (đã lưu khi đăng nhập)
     SaleStaff9 saleStaff = (SaleStaff9) session.getAttribute("saleStaff");
+    // Về giao diện chính (vd Hoàn thành ở InvoiceInfo9.jsp): bỏ hóa đơn tạm khỏi session
+    session.removeAttribute("invoice");
 %>
+<%-- Bước 48: SaleStaffHome9.jsp hiển thị cho nhân viên bán hàng --%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
