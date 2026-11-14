@@ -16,7 +16,7 @@ public class CustomerDAO9 extends DAO9 {
      * @param phone số điện thoại khách hàng
      * @return khách hàng tìm được, null nếu không có
      */
-    // Bước 28: CustomerDAO9 gọi hàm getCustomerByPhone()
+    // Bước 31: CustomerDAO9 gọi hàm getCustomerByPhone()
     public Customer9 getCustomerByPhone(String phone) {
         Customer9 kq = null;
         String sql = "SELECT c.*, m.id AS cardId, m.cardCode, m.createdDate, m.points "
@@ -26,8 +26,8 @@ public class CustomerDAO9 extends DAO9 {
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                // Bước 29: getCustomerByPhone() gọi lớp Customer9 để đóng gói thông tin
-                // Bước 30: Customer9 đóng gói thông tin thực thể
+                // Bước 32: getCustomerByPhone() gọi lớp Customer9 để đóng gói thông tin
+                // Bước 33: Customer9 đóng gói thông tin thực thể
                 kq = new Customer9();
                 kq.setId(rs.getInt("id"));
                 kq.setFullName(rs.getString("fullName"));
@@ -41,13 +41,13 @@ public class CustomerDAO9 extends DAO9 {
                     card.setPoints(rs.getInt("points"));
                     kq.setCard(card);
                 }
-                // Bước 31: Customer9 trả kết quả về cho getCustomerByPhone()
+                // Bước 34: Customer9 trả kết quả về cho getCustomerByPhone()
             }
         } catch (Exception e) {
             e.printStackTrace();
             kq = null;
         }
-        // Bước 32: getCustomerByPhone() trả kết quả cho ConfirmPayment9.jsp
+        // Bước 35: getCustomerByPhone() trả kết quả cho ConfirmPayment9.jsp
         return kq;
     }
 }

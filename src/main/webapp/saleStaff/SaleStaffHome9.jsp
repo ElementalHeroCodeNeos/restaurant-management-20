@@ -6,7 +6,7 @@
     // Về giao diện chính (vd Hoàn thành ở InvoiceInfo9.jsp): bỏ hóa đơn tạm khỏi session
     session.removeAttribute("invoice");
 %>
-<%-- Bước 48: SaleStaffHome9.jsp hiển thị cho nhân viên bán hàng --%>
+<%-- Bước 54: SaleStaffHome9.jsp hiển thị cho nhân viên bán hàng --%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>

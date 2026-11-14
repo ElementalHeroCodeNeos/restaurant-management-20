@@ -20,7 +20,7 @@
 <div class="box">
     <h2>Hóa đơn</h2>
 
-    <%-- Bước 43: InvoiceInfo9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
+    <%-- Bước 49: InvoiceInfo9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
     <div class="info-area">
         <div class="line">Mã hóa đơn: <label id="lblInvoiceId"><%= String.format("HĐ%04d", invoice.getId()) %></label></div>
         <div class="line">Thời gian thanh toán: <label id="lblPaymentTime"><%= df.format(invoice.getPaymentTime()) %></label></div>
@@ -64,11 +64,11 @@
         <div class="line total">Tổng tiền: <label id="lblTotalAmount"><%= nf.format(invoice.getTotalAmount()) %></label></div>
 
         <div class="actions-row">
-            <%-- Bước 44: nhân viên click In hóa đơn --%>
-            <%-- Bước 45: InvoiceInfo9.jsp in hóa đơn (các nút bị ẩn khi in) --%>
-            <button type="button" id="btnPrint" class="btn" onclick="window.print()">In hóa đơn</button>
-            <%-- Bước 46: nhân viên click Hoàn thành --%>
-            <%-- Bước 47: InvoiceInfo9.jsp gọi trang SaleStaffHome9.jsp (trang đó xóa hóa đơn tạm khỏi session) --%>
+            <%-- Bước 50: nhân viên click In hóa đơn --%>
+            <%-- Bước 51: InvoiceInfo9.jsp in hóa đơn (các nút bị ẩn khi in) --%>
+            <button type="submit" id="btnPrint" class="btn" onclick="window.print()">In hóa đơn</button>
+            <%-- Bước 52: nhân viên click Hoàn thành --%>
+            <%-- Bước 53: InvoiceInfo9.jsp gọi trang SaleStaffHome9.jsp (trang đó xóa hóa đơn tạm khỏi session) --%>
             <form method="get" action="SaleStaffHome9.jsp">
                 <button type="submit" id="btnComplete" class="btn">Hoàn thành</button>
             </form>

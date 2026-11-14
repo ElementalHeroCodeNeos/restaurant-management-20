@@ -9,10 +9,10 @@
     // Receive invoice info: hóa đơn tạm trong session
     Invoice9 invoice = (Invoice9) session.getAttribute("invoice");
 
-    // Bước 39: doConfirmPayment9.jsp gọi lớp InvoiceDAO9 yêu cầu lưu hóa đơn
+    // Bước 42: doConfirmPayment9.jsp gọi lớp InvoiceDAO9 yêu cầu lưu hóa đơn
     InvoiceDAO9 invoiceDAO = new InvoiceDAO9();
     if (invoice != null && invoiceDAO.saveInvoice(invoice)) {
-        // Bước 42: doConfirmPayment9.jsp gọi trang InvoiceInfo9.jsp
+        // Bước 48: doConfirmPayment9.jsp gọi trang InvoiceInfo9.jsp
         response.sendRedirect("InvoiceInfo9.jsp");
         return;
     }

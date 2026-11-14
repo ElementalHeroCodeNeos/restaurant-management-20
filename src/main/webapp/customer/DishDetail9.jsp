@@ -58,7 +58,7 @@
 
     <%-- Quay lại SearchDish9.jsp?txtDishName=… (giữ từ khóa và kết quả) --%>
     <div class="back-row">
-        <button type="button" id="btnBack" class="btn" onclick="history.back()">Quay lại</button>
+        <button type="submit" id="btnBack" class="btn" onclick="history.back()">Quay lại</button>
     </div>
 </div>
 </body>

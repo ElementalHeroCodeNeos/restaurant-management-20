@@ -22,7 +22,7 @@ public class OrderDAO9 extends DAO9 {
      * @param t bàn đã chọn (cần có id)
      * @return đơn hàng đang phục vụ, null nếu không có
      */
-    // Bước 16: OrderDAO9 gọi hàm getOrderOfTable()
+    // Bước 19: OrderDAO9 gọi hàm getOrderOfTable()
     public Order9 getOrderOfTable(Table9 t) {
         Order9 kq = null;
         String sqlOrder = "SELECT o.*, t.name AS tableName, t.capacity FROM tblOrder9 o "
@@ -38,8 +38,8 @@ public class OrderDAO9 extends DAO9 {
             ps.setInt(1, t.getId());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                // Bước 17: getOrderOfTable() gọi lớp Order9 để đóng gói thông tin
-                // Bước 18: Order9 đóng gói thông tin thực thể
+                // Bước 20: getOrderOfTable() gọi lớp Order9 để đóng gói thông tin
+                // Bước 21: Order9 đóng gói thông tin thực thể
                 //ban: điền tiếp tên, sức chứa vào chính bàn t được truyền vào
                 t.setName(rs.getString("tableName"));
                 t.setCapacity(rs.getInt("capacity"));
@@ -96,13 +96,13 @@ public class OrderDAO9 extends DAO9 {
                     }
                 }
                 kq.setOrderedCombos(listOC);
-                // Bước 19: Order9 trả kết quả về cho getOrderOfTable()
+                // Bước 22: Order9 trả kết quả về cho getOrderOfTable()
             }
         } catch (Exception e) {
             e.printStackTrace();
             kq = null;
         }
-        // Bước 20: getOrderOfTable() trả kết quả cho ConfirmPayment9.jsp
+        // Bước 23: getOrderOfTable() trả kết quả cho ConfirmPayment9.jsp
         return kq;
     }
 }

@@ -13,27 +13,30 @@
 
     String id = request.getParameter("id");
     if (id != null) {
-        // Lần gọi đầu từ SearchTable9.jsp: bàn được chọn (id đại diện cho bàn)
+        // Lần gọi đầu từ SearchTable9.jsp (id đại diện cho bàn được chọn)
+        // Bước 15: ConfirmPayment9.jsp gọi lớp Table9 để đóng gói thông tin bàn đã chọn
+        // Bước 16: Table9 đóng gói thông tin bàn đã chọn
         table = new Table9();
         table.setId(Integer.parseInt(id));
+        // Bước 17: Table9 trả kết quả về cho ConfirmPayment9.jsp
 
-        // Bước 15: ConfirmPayment9.jsp gọi lớp OrderDAO9 lấy đơn hàng đang phục vụ của bàn đã chọn
+        // Bước 18: ConfirmPayment9.jsp gọi lớp OrderDAO9 lấy đơn hàng đang phục vụ của bàn đã chọn
         OrderDAO9 orderDAO = new OrderDAO9();
         Order9 order = orderDAO.getOrderOfTable(table);
 
-        // Bước 21: ConfirmPayment9.jsp gọi lớp Invoice9 để tạo hóa đơn tạm
+        // Bước 24: ConfirmPayment9.jsp gọi lớp Invoice9 để tạo hóa đơn tạm
         double totalAmount = 0;
         for (OrderedDish9 od : order.getOrderedDishes()) totalAmount += od.getAmount();
         for (OrderedCombo9 oc : order.getOrderedCombos()) totalAmount += oc.getAmount();
-        // Bước 22: Invoice9 đóng gói đơn hàng, nhân viên bán hàng đang đăng nhập và tổng tiền
+        // Bước 25: Invoice9 đóng gói đơn hàng, nhân viên bán hàng đang đăng nhập và tổng tiền
         invoice = new Invoice9();
         invoice.setOrder(order);
         invoice.setSaleStaff(saleStaff);
         invoice.setTotalAmount(totalAmount);
-        // Bước 23: Invoice9 trả kết quả về cho ConfirmPayment9.jsp (giữ hóa đơn tạm trong session)
+        // Bước 26: Invoice9 trả kết quả về cho ConfirmPayment9.jsp (giữ hóa đơn tạm trong session)
         session.setAttribute("invoice", invoice);
     } else {
-        // Bước 26: ConfirmPayment9.jsp submit gọi chính nó xử lí (Tìm khách hàng)
+        // Bước 29: ConfirmPayment9.jsp submit gọi chính nó xử lí (Tìm khách hàng)
         // dùng lại hóa đơn tạm trong session, không gọi lại OrderDAO9
         invoice = (Invoice9) session.getAttribute("invoice");
         table = invoice.getOrder().getTable();
@@ -43,14 +46,14 @@
         if (phone.isEmpty()) {
             err = "Vui lòng nhập số điện thoại";
         } else {
-            // Bước 27: ConfirmPayment9.jsp gọi lớp CustomerDAO9 tìm khách hàng theo số điện thoại
+            // Bước 30: ConfirmPayment9.jsp gọi lớp CustomerDAO9 tìm khách hàng theo số điện thoại
             CustomerDAO9 customerDAO = new CustomerDAO9();
             Customer9 customer = customerDAO.getCustomerByPhone(phone);
             if (customer != null) {
-                // Bước 33: ConfirmPayment9.jsp gọi lớp Invoice9 yêu cầu gắn khách hàng vào hóa đơn
-                // Bước 34: Invoice9 gọi hàm setCustomer()
+                // Bước 36: ConfirmPayment9.jsp gọi lớp Invoice9 yêu cầu gắn khách hàng vào hóa đơn
+                // Bước 37: Invoice9 gọi hàm setCustomer()
                 invoice.setCustomer(customer);
-                // Bước 35: Invoice9 trả đối tượng về cho ConfirmPayment9.jsp
+                // Bước 38: Invoice9 trả đối tượng về cho ConfirmPayment9.jsp
             } else {
                 // không tìm thấy: giữ nguyên khách đã gắn trước đó (nếu có)
                 err = "Không tìm thấy khách hàng";
@@ -72,8 +75,8 @@
 <div class="box">
     <h2>Xác nhận thanh toán</h2>
 
-    <%-- Bước 24: ConfirmPayment9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
-    <%-- Bước 36: ConfirmPayment9.jsp hiển thị hóa đơn kèm thông tin khách hàng --%>
+    <%-- Bước 27: ConfirmPayment9.jsp hiển thị hóa đơn cho nhân viên bán hàng --%>
+    <%-- Bước 39: ConfirmPayment9.jsp hiển thị hóa đơn kèm thông tin khách hàng --%>
     <div class="info-area">
         <div class="line">Bàn: <label id="lblTableName"><%= table.getName() %></label></div>
         <div class="line">Thời gian tạo đơn: <label id="lblCreatedTime"><%= df.format(invoice.getOrder().getCreatedTime()) %></label></div>
@@ -81,7 +84,7 @@
         <div class="line">Khách hàng: <label id="lblCustomer"><%= invoice.getCustomer() == null ? ""
                 : invoice.getCustomer().getFullName() + " - " + invoice.getCustomer().getPhone() %></label></div>
 
-        <%-- Bước 25: nhân viên nhập số điện thoại khách hàng và click Tìm khách hàng --%>
+        <%-- Bước 28: nhân viên nhập số điện thoại khách hàng và click Tìm khách hàng --%>
         <form method="post" action="ConfirmPayment9.jsp" class="phone-row">
             <label for="txtPhone">Số điện thoại</label>
             <input type="text" name="txtPhone" id="txtPhone" value="<%= txtPhone == null ? "" : txtPhone %>">
@@ -124,8 +127,8 @@
         <div class="line total">Tổng tiền: <label id="lblTotalAmount"><%= nf.format(invoice.getTotalAmount()) %></label></div>
 
         <div class="actions-row">
-            <%-- Bước 37: nhân viên click Xác nhận --%>
-            <%-- Bước 38: ConfirmPayment9.jsp gọi trang doConfirmPayment9.jsp --%>
+            <%-- Bước 40: nhân viên click Xác nhận --%>
+            <%-- Bước 41: ConfirmPayment9.jsp gọi trang doConfirmPayment9.jsp --%>
             <form method="post" action="doConfirmPayment9.jsp">
                 <button type="submit" id="btnConfirm" class="btn">Xác nhận</button>
             </form>

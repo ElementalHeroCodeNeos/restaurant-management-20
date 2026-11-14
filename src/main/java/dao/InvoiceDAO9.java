@@ -21,7 +21,7 @@ public class InvoiceDAO9 extends DAO9 {
      * @param i hóa đơn tạm (đơn hàng, nhân viên, khách hàng có thể null, tổng tiền)
      * @return true nếu lưu thành công
      */
-    // Bước 40: InvoiceDAO9 gọi hàm saveInvoice()
+    // Bước 43: InvoiceDAO9 gọi hàm saveInvoice()
     public boolean saveInvoice(Invoice9 i) {
         boolean kq = false;
         String sqlThem = "INSERT INTO tblInvoice9(paymentTime, tblOrder9id, tblSaleStaff9id, tblCustomer9id) "
@@ -63,8 +63,11 @@ public class InvoiceDAO9 extends DAO9 {
             con.commit();
 
             //luu thanh cong: cap nhat lai doi tuong
+            // Bước 44: saveInvoice() gọi lớp Invoice9 để cập nhật mã hóa đơn và thời gian thanh toán
+            // Bước 45: Invoice9 gọi hàm setId(), setPaymentTime()
             i.setId(id);
             i.setPaymentTime(paymentTime);
+            // Bước 46: Invoice9 trả kết quả về cho saveInvoice()
             i.getOrder().setStatus("Đã thanh toán");
             if (diem > 0)
                 i.getCustomer().getCard().setPoints(i.getCustomer().getCard().getPoints() + diem);
@@ -84,7 +87,7 @@ public class InvoiceDAO9 extends DAO9 {
                 e.printStackTrace();
             }
         }
-        // Bước 41: InvoiceDAO9 trả kết quả về cho doConfirmPayment9.jsp
+        // Bước 47: InvoiceDAO9 trả kết quả về cho doConfirmPayment9.jsp
         return kq;
     }
 }
