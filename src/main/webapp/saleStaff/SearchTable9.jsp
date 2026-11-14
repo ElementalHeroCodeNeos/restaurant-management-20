@@ -56,7 +56,8 @@
                Table9 t = listTable.get(i); %>
             <tr>
                 <td><%= i + 1 %></td>
-                <%-- Bước 13: nhân viên click chọn 1 bàn (ConfirmPayment9.jsp làm ở commit 9) --%>
+                <%-- Bước 13: nhân viên click chọn 1 bàn --%>
+                <%-- Bước 14: SearchTable9.jsp gọi trang ConfirmPayment9.jsp --%>
                 <td><a class="chooseTable" href="ConfirmPayment9.jsp?id=<%= t.getId() %>"><%= t.getName() %></a></td>
                 <td><%= t.getCapacity() %></td>
             </tr>

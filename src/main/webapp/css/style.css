@@ -137,6 +137,37 @@ table.data td {
     min-width: 480px;
 }
 
+/* Xác nhận thanh toán: thông tin, ô SĐT, bảng món, nút cùng lề trái với bảng */
+.confirm-area {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.confirm-area .line {
+    margin: 6px 0;
+}
+
+.phone-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin: 12px 0 20px;
+}
+
+#tblOrderedItem {
+    min-width: 640px;
+}
+
+.confirm-area .total {
+    margin-top: 24px;
+}
+
+.actions-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
 /* Chi tiết món: nhãn trái, giá trị phải, ảnh dưới */
 table.detail {
     margin-left: 80px;
