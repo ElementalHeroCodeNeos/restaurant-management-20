@@ -123,6 +123,18 @@ table.data td {
     min-width: 600px;
 }
 
+/* Link chọn món/bàn: chữ đen như ảnh docs/ui, rê chuột vào mới gạch chân */
+.chooseDish,
+.chooseTable {
+    color: inherit;
+    text-decoration: none;
+}
+
+.chooseDish:hover,
+.chooseTable:hover {
+    text-decoration: underline;
+}
+
 #tblDish .img-cell {
     text-align: center;
 }
